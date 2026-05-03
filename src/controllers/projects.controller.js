@@ -28,6 +28,7 @@ export const getProject = async (req, res) => {
 
 export const createProject = async (req, res) => {
     const {code, title, series_title, goal} = req.body;
+    console.log(req.body);
     if (!code || !title){
         return res.status(400).json({
             error: "Code and Title are required."
@@ -38,17 +39,19 @@ export const createProject = async (req, res) => {
             error: "Goal must be a non-negative integer."
         });
     }
-    const sql = "INSERT INTO projects (code, title, series_title, goal) VALUES (?, ?, ?)";
-    const [result] = await connection.execute(sql, [code, title, series_title, goal]);
-    if (result.affectedRows === 1){
-        return res.status(201).json({
-            message: "Project created successfully.",
-            id: result.insertId
-        });
-    } else {
+    try {
+        const sql = "INSERT INTO projects (code, title, series_title, goal) VALUES (?, ?, ?, ?)";
+        const [result] = await connection.execute(sql, [code, title, series_title, goal]);
+        if (result.affectedRows === 1) {
+            return res.status(201).json({
+                message: "Project created successfully.",
+                id: result.insertId
+            });
+        }
+    } catch (error) {
         return res.status(500).json({
-            error: "Database Error",
-            message: "Project creation failed."
+            error: "Database error",
+            message: error
         });
     }
 }
@@ -87,6 +90,7 @@ export const updateProject = async (req, res) => {
     if (result.affectedRows === 1){
         return res.status(201).json({
             message: "Project updated successfully.",
+            id: id
         });
     } else {
         return res.status(500).json({
