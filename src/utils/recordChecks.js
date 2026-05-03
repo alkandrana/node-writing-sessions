@@ -2,8 +2,10 @@ import connection from "../../db.config.js";
 // import metadata from "metadata.js";
 
 export async function checkProjectExists(res, project_id) {
+    console.log(project_id);
     const projectCheck = "SELECT id FROM projects WHERE id = ?";
-    const [rows] = connection.execute(projectCheck, [project_id]);
+    const [rows] = await connection.execute(projectCheck, [project_id]);
+    console.log(rows);
     if (rows.length === 0) {
         return res.status(400).json({
             error: "No Record Found",

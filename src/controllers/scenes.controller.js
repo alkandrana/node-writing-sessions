@@ -78,7 +78,7 @@ export const getSceneMetadata = async (req, res) => {
 }
 
 export const createScene = async (req, res) => {
-    const {code, name, words, project_id} = req.body;
+    const {code, sceneName, sequence, words, status, project_id} = req.body;
     console.log(req.body);
     if (!code || !project_id) {
         return res.status(400).json({
@@ -92,8 +92,8 @@ export const createScene = async (req, res) => {
     }
     try {
         await checkProjectExists(res, project_id);
-        const sql = "INSERT INTO scenes (code, name, words, project_id) VALUES (?, ?, ?, ?)";
-        const [result] = await connection.execute(sql, [code, name, words, project_id]);
+        const sql = "INSERT INTO scenes (code, name, sequence, words, status, project_id) VALUES (?, ?, ?, ?, ?, ?)";
+        const [result] = await connection.execute(sql, [code, sceneName, sequence, words, status, project_id]);
         if (result.affectedRows === 1) {
             return res.status(201).json({
                 message: "Scene created successfully.",
@@ -101,6 +101,7 @@ export const createScene = async (req, res) => {
             });
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             error: "Database error",
             message: error
