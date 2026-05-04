@@ -19,6 +19,30 @@ export const getProject = async (req, res) => {
     return res.json(project);
 }
 
+export const getProjectMetadata = async (req, res) => {
+    const metadata = {
+        name: "projects",
+        label: "Projects",
+        size: 0,
+        columns: []
+    }
+    const columns = Object.keys(projects);
+    console.log(columns);
+    metadata.size = columns.length;
+    for (const col of columns) {
+        let current = projects[col];
+        let datatype = current.enumValues ? "enum" :
+            current.dataType;
+        metadata.columns.push({
+            name: col,
+            datatype: datatype,
+            nullable: !current.notNull,
+            values: current.enumValues
+        });
+    }
+    return res.json(metadata);
+}
+
 export const createProject = async (req, res) => {
     const project = req.body;
     console.log("Pre-post data: ", req.body);

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { projects, scenes, sessions } from "./schema";
+import { projects, scenes, sessions } from "../src/db/schema.js";
 
 export const scenesRelations = relations(scenes, ({one, many}) => ({
 	project: one(projects, {
