@@ -58,8 +58,8 @@ export const updateProject = async (req, res) => {
     console.log(req.body);
     const id = req.params.id;
     const data = req.body;
-    const response = await db.update(projects)
-      .set(data)
+    console.log(data);
+    const response = await db.update(projects).set(data)
       .where(eq(projects.id, id));
     return res.json({
         status: response[0].info,
