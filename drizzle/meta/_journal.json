@@ -8,6 +8,20 @@
       "when": 1777862001036,
       "tag": "0000_same_dragon_lord",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1777870632693,
+      "tag": "0001_rare_boom_boom",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1777870788269,
+      "tag": "0002_tired_sue_storm",
+      "breakpoints": true
     }
   ]
 }

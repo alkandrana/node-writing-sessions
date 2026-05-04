@@ -9,7 +9,7 @@ app.use(express.json());
 app.use("/projects", projectRouter);
 app.use("/scenes", sceneRouter);
 app.get('/', (req, res) => {
-    res.send("Hello from Writing Sessions Server!");
+    res.send("<h2>Hello from Writing Sessions Server!</h2>");
 });
 
 app.listen(3000, () => {
