@@ -1,7 +1,4 @@
--- Current sql file was generated after introspecting the database
--- If you want to run this migration please uncomment this code before executing migrations
-/*
-CREATE TABLE `projects` (
+CREATE TABLE IF NOT EXISTS `projects` (
 	`id` bigint AUTO_INCREMENT NOT NULL,
 	`code` varchar(5) NOT NULL,
 	`title` varchar(255) NOT NULL,
@@ -11,9 +8,9 @@ CREATE TABLE `projects` (
 	CONSTRAINT `code` UNIQUE(`code`)
 );
 --> statement-breakpoint
-CREATE TABLE `scenes` (
+CREATE TABLE IF NOT EXISTS `scenes` (
 	`id` bigint AUTO_INCREMENT NOT NULL,
-	`code` varchar(5) NOT NULL,
+	`code` varchar(10) NOT NULL,
 	`sequence` int,
 	`name` varchar(255),
 	`words` int DEFAULT 0,
@@ -23,7 +20,7 @@ CREATE TABLE `scenes` (
 	CONSTRAINT `code` UNIQUE(`code`)
 );
 --> statement-breakpoint
-CREATE TABLE `sessions` (
+CREATE TABLE IF NOT EXISTS `sessions` (
 	`id` bigint AUTO_INCREMENT NOT NULL,
 	`date` date NOT NULL,
 	`start_time` timestamp,
@@ -33,9 +30,8 @@ CREATE TABLE `sessions` (
 	`comments` varchar(255),
 	CONSTRAINT `sessions_id` PRIMARY KEY(`id`)
 );
---> statement-breakpoint
-ALTER TABLE `scenes` ADD CONSTRAINT `fk_scenes_books` FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `sessions` ADD CONSTRAINT `fk_sessions_scenes` FOREIGN KEY (`scene_id`) REFERENCES `scenes`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+-- > statement-breakpoint
+ALTER TABLE `scenes` ADD CONSTRAINT `scenes_project_id_projects_id_fk` FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `sessions` ADD CONSTRAINT `sessions_scene_id_scenes_id_fk` FOREIGN KEY (`scene_id`) REFERENCES `scenes`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX `IX_sessions_date` ON `sessions` (`date`);--> statement-breakpoint
 CREATE INDEX `IX_sessions_scene_date` ON `sessions` (`scene_id`,`date`);
-*/

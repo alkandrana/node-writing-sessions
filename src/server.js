@@ -11,9 +11,9 @@ app.use("/projects", projectRouter);
 app.use("/scenes", sceneRouter);
 app.use("/sessions", sessionRouter);
 app.get('/', (req, res) => {
-    res.send("<h2>Hello from Writing Sessions Server!</h2>");
+  res.send("<h2>Hello from Writing Sessions Server!</h2>");
 });
 
 app.listen(3000, () => {
-    console.log("Server started on port 3000");
+  console.log("Server started on port 3000");
 });

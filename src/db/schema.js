@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, primaryKey, unique, bigint, varchar, int, foreignKey, mysqlEnum, index, date, timestamp } from "drizzle-orm/mysql-core"
+import { mysqlTable, primaryKey, unique, bigint, varchar, int, mysqlEnum, index, date, timestamp } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const projects = mysqlTable("projects", {
@@ -15,7 +15,7 @@ export const projects = mysqlTable("projects", {
 
 export const scenes = mysqlTable("scenes", {
 	id: bigint({ mode: "number" }).autoincrement().notNull(),
-	code: varchar({ length: 5 }).notNull(),
+	code: varchar({ length: 10 }).notNull(),
 	sequence: int(),
 	name: varchar({ length: 255 }),
 	words: int().default(0),

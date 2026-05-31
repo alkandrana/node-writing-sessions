@@ -1,49 +1,51 @@
 {
-  "id": "00000000-0000-0000-0000-000000000000",
-  "prevId": "",
   "version": "5",
   "dialect": "mysql",
+  "id": "dad246a5-d77f-4983-9447-4eb50cfaab12",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "projects": {
       "name": "projects",
       "columns": {
         "id": {
-          "autoincrement": true,
           "name": "id",
           "type": "bigint",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "code": {
-          "autoincrement": false,
           "name": "code",
           "type": "varchar(5)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "title": {
-          "autoincrement": false,
           "name": "title",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "series_title": {
-          "autoincrement": false,
           "name": "series_title",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "goal": {
-          "default": 0,
-          "autoincrement": false,
           "name": "goal",
           "type": "int",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
         }
       },
+      "indexes": {},
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "projects_id": {
           "name": "projects_id",
@@ -52,8 +54,6 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
       "uniqueConstraints": {
         "code": {
           "name": "code",
@@ -68,69 +68,61 @@
       "name": "scenes",
       "columns": {
         "id": {
-          "autoincrement": true,
           "name": "id",
           "type": "bigint",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "code": {
-          "autoincrement": false,
           "name": "code",
-          "type": "varchar(5)",
+          "type": "varchar(10)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "sequence": {
-          "autoincrement": false,
           "name": "sequence",
           "type": "int",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "name": {
-          "autoincrement": false,
           "name": "name",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "words": {
-          "default": 0,
-          "autoincrement": false,
           "name": "words",
           "type": "int",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
         },
         "status": {
-          "default": "'pending'",
-          "autoincrement": false,
           "name": "status",
           "type": "enum('pending','writing','finished','aborted')",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
         },
         "project_id": {
-          "autoincrement": false,
           "name": "project_id",
           "type": "bigint",
           "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "compositePrimaryKeys": {
-        "scenes_id": {
-          "name": "scenes_id",
-          "columns": [
-            "id"
-          ]
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "fk_scenes_books": {
-          "name": "fk_scenes_books",
+        "scenes_project_id_projects_id_fk": {
+          "name": "scenes_project_id_projects_id_fk",
           "tableFrom": "scenes",
           "tableTo": "projects",
           "columnsFrom": [
@@ -141,6 +133,14 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "scenes_id": {
+          "name": "scenes_id",
+          "columns": [
+            "id"
+          ]
         }
       },
       "uniqueConstraints": {
@@ -157,61 +157,53 @@
       "name": "sessions",
       "columns": {
         "id": {
-          "autoincrement": true,
           "name": "id",
           "type": "bigint",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "date": {
-          "autoincrement": false,
           "name": "date",
           "type": "date",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "start_time": {
-          "autoincrement": false,
           "name": "start_time",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "stop_time": {
-          "autoincrement": false,
           "name": "stop_time",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "words": {
-          "autoincrement": false,
           "name": "words",
           "type": "int",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "scene_id": {
-          "autoincrement": false,
           "name": "scene_id",
           "type": "bigint",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "comments": {
-          "autoincrement": false,
           "name": "comments",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "compositePrimaryKeys": {
-        "sessions_id": {
-          "name": "sessions_id",
-          "columns": [
-            "id"
-          ]
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -232,8 +224,8 @@
         }
       },
       "foreignKeys": {
-        "fk_sessions_scenes": {
-          "name": "fk_sessions_scenes",
+        "sessions_scene_id_scenes_id_fk": {
+          "name": "sessions_scene_id_scenes_id_fk",
           "tableFrom": "sessions",
           "tableTo": "scenes",
           "columnsFrom": [
@@ -244,6 +236,14 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sessions_id": {
+          "name": "sessions_id",
+          "columns": [
+            "id"
+          ]
         }
       },
       "uniqueConstraints": {},
