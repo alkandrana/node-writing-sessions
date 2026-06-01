@@ -1,0 +1,1 @@
+ALTER TABLE `scenes` ADD `plotline` varchar(255);

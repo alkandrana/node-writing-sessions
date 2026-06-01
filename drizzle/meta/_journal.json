@@ -8,6 +8,13 @@
       "when": 1777996366683,
       "tag": "0000_steady_vivisector",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1780275474507,
+      "tag": "0001_solid_loki",
+      "breakpoints": true
     }
   ]
 }

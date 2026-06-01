@@ -20,6 +20,7 @@ export const scenes = mysqlTable("scenes", {
 	name: varchar({ length: 255 }),
 	words: int().default(0),
 	status: mysqlEnum(['pending','writing','finished','aborted']).default('pending').notNull(),
+	plotline: varchar({length: 255}),
 	projectId: bigint("project_id", { mode: "number" }).references(() => projects.id),
 },
 (table) => [

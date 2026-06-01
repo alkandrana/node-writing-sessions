@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/mysql2';
-import { projects } from '../db/schema.js';
+import { projects, scenes } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
+import { beats } from '../utils/metadata.js';
 
 const db = drizzle(process.env.DATABASE_URL);
 
@@ -9,6 +10,27 @@ export const getAllProjects = async (req, res) => {
   const projectResult = await db.select().from(projects);
   console.log("All projects: ", projectResult);
   return res.json(projectResult);
+}
+
+export const getProjectProgress = async (req, res) => {
+    const projectId = req.params.id;
+    const sceneList = await db.select().from(scenes)
+        .where(eq(scenes.projectId, projectId));
+    const projectTarget = await db.select({ target: projects.goal }).from(projects);
+    console.log("Word Count Goal: ", projectTarget);
+    let wordCount = 0;
+    console.log("Scenes: ", sceneList.length);
+    for (let sc of sceneList) {
+        wordCount += sc.words;
+        sc.tsf = wordCount;
+        sc.pot = ((wordCount / projectTarget) * 100).toFixed(2);
+        for (let b in beats){
+            if (beats[b].start < sc.pot && beats[b].end > sc.pot){
+                sc.beat = b;
+            }
+        }
+    }
+    return res.json(sceneList);
 }
 
 export const getProject = async (req, res) => {
