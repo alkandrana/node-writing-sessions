@@ -8,8 +8,18 @@ const db = drizzle(process.env.DATABASE_URL);
 
 export const getAllProjects = async (req, res) => {
   const projectResult = await db.select().from(projects);
-  console.log("All projects: ", projectResult);
   return res.json(projectResult);
+}
+
+export const getProjectByCode = async (req, res) => {
+    const code = req.params.code;
+    const [project] = await db.select().from(projects)
+        .where(eq(projects.code, code));
+    if (!project) {
+        return res.sendStatus(404);
+    } else {
+        return res.json(project);
+    }
 }
 
 export const getProjectProgress = async (req, res) => {
@@ -35,10 +45,13 @@ export const getProjectProgress = async (req, res) => {
 
 export const getProject = async (req, res) => {
     const id = req.params.id;
-    const project = await db.select().from(projects)
+    const [project] = await db.select().from(projects)
       .where(eq(projects.id, id));
-    console.log("Project: ", project);
-    return res.json(project);
+    if (!project) {
+        return res.sendStatus(404);
+    } else {
+        return res.json(project);
+    }
 }
 
 export const getProjectMetadata = async (req, res) => {

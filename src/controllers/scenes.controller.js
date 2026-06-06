@@ -41,15 +41,23 @@ export const getScenesByProject = async (req, res) => {
 
 export const getSceneByCode = async (req, res) => {
   const code = req.params.code;
-  const scene = await db.select().from(scenes).where(eq(scenes.code, code));
-  return res.json(scene);
+  const [scene] = await db.select().from(scenes).where(eq(scenes.code, code));
+  if (!scene) {
+    return res.sendStatus(404);
+  } else {
+    return res.json(scene);
+  }
 }
 
 export const getScene = async (req, res) => {
   const id = req.params.id;
-  const scene = await db.select().from(scenes)
+  const [scene] = await db.select().from(scenes)
     .where(eq(scenes.id, id));
-  return res.json(scene);
+  if (!scene) {
+    return res.sendStatus(404);
+  } else {
+    return res.json(scene);
+  }
 }
 
 export const createScene = async (req, res) => {
@@ -66,6 +74,7 @@ export const updateScene = async (req, res) => {
   console.log(req.body);
   const id = req.params.id;
   const data = req.body;
+  console.log(data);
   const response = await db.update(scenes).set(data)
     .where(eq(scenes.id, id));
   return res.status(201).json({
