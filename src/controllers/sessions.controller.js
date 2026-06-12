@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/mysql2';
-import { sessions} from "../db/schema.js";
+import {scenes, sessions} from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
 const db = drizzle(process.env.DATABASE_URL);
@@ -8,6 +8,10 @@ const db = drizzle(process.env.DATABASE_URL);
 export const getAllSessions = async (req, res) => {
     const sessionResult = await db.select()
         .from(sessions);
+    for (let s of sessionResult) {
+        const [scene] = await db.select().from(scenes).where(eq(scenes.id, s.sceneId));
+        s.scene = scene;
+    }
     console.log(sessionResult);
     return res.json(sessionResult);
 }
